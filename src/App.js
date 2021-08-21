@@ -38,7 +38,7 @@ function App() {
     setActiveEl(value)
     const lastIndx = (value*5);
     console.log('last',lastIndx);
-    let firstIndx =  lastIndx-5;
+    const firstIndx =  lastIndx-5;
     console.log('first',firstIndx);
     // if(value%2===0){
     //   firstIndx = firstIndx-1;
