@@ -7,14 +7,20 @@ import { useEffect, useState } from 'react';
 function App() {
   const pageLength =5;
   const [items,setItems]=useState([])
+  const initItems = items?.slice(0,5);
+  console.log('intial itemsss',initItems);
   const [newItems,setNewItems] = useState([])
   const [actvieEl,setActiveEl] = useState(1);
   const dataLength = items.length;
+ 
   let pageCount = Math.ceil(dataLength/pageLength);
   // console.log('data length',pageCount);
   // console.log(fakeData.data)
   useEffect(()=>{
-      setItems(fakeData.data)
+    const data = fakeData?.data;
+      setItems(data)
+      const inititalData =data.slice(0,5)
+      setNewItems(inititalData);
   },[])
   console.log('this is all fake data',items)
   let active = actvieEl ;
