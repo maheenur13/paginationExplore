@@ -10,7 +10,7 @@ function App() {
   const initItems = items?.slice(0,5);
   console.log('intial itemsss',initItems);
   const [newItems,setNewItems] = useState([])
-  const [actvieEl,setActiveEl] = useState(1);
+  let [actvieEl,setActiveEl] = useState(1);
   const dataLength = items.length;
  
   let pageCount = Math.ceil(dataLength/pageLength);
@@ -24,37 +24,60 @@ function App() {
   },[])
   console.log('this is all fake data',items)
   let active = actvieEl ;
+  const [newPageCount,setNewPageCount]= useState();
   let itemss = [];
-  for (let number = 1; number <= pageCount; number++) {
+  // let newPaginationItems;
+
+  for (let number = 1; number <= pageCount; number++) {   
     itemss.push(
       <Pagination.Item onClick={()=>{pageClick(number)}} key={number} active={number === active}>
         {number}
       </Pagination.Item>,
     );
-  }
+
+      }
+      // const maahee = itemss.pop()
+      console.log('maheeeee here okay 2',itemss)
+      // setNewPageCount(itemss);
 
   const pageClick = (value)=>{
     // console.log('pageClicked',value)
     setActiveEl(value)
+    pageSlice(value)
+    
+  
+  }
+  const pageSlice = (value) => {
     const lastIndx = (value*5);
     console.log('last',lastIndx);
     const firstIndx =  lastIndx-5;
     console.log('first',firstIndx);
-    // if(value%2===0){
-    //   firstIndx = firstIndx-1;
-    // }
-    // if(value%2===1 && value>1){
-    //   firstIndx = firstIndx-1;
-    // }
     const newArray = items.slice(firstIndx,lastIndx);
     setNewItems(newArray);
-  
+  }
+  const nextClick = () => {
+    setActiveEl(++actvieEl);
+    console.log('new active ele',actvieEl);
+    pageSlice(actvieEl);
+  }
+  const prevClick = () => {
+    setActiveEl(--actvieEl);
+    pageSlice(actvieEl);
   }
   return (
 
     <div className="d-flex justify-content-center ">
       <div style={{position: 'fixed'}} className="border d-flex justify-content-center mt-5">
-      <Pagination  size="lg">{itemss}</Pagination>
+      <Pagination  size="lg">
+      {actvieEl<=1 ?<Pagination.Item disabled>Prev</Pagination.Item>
+      :
+      <Pagination.Item onClick={prevClick} >Prev</Pagination.Item>
+    }
+        {itemss}
+        {actvieEl>=pageCount? <Pagination.Item disabled>Next</Pagination.Item>
+        :
+        <Pagination.Item onClick={nextClick}>Next</Pagination.Item>}
+      </Pagination>
     </div>
     <div className="border container mt-5">
      {
